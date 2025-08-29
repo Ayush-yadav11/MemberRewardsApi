@@ -36,12 +36,25 @@ A comprehensive RESTful API built with .NET 8 for managing customer memberships,
 ### Import Collection
 Click the button below to import the complete Postman collection:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://raw.githubusercontent.com/YOUR_USERNAME/member-rewards-api/main/MemberRewardsAPI.postman_collection.json)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/33737486-member-rewards-api-collection?action=collection%2Fimport)
 
 Or manually import from URL:
 ```
-https://raw.githubusercontent.com/YOUR_USERNAME/member-rewards-api/main/MemberRewardsAPI.postman_collection.json
+https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewardsAPI.postman_collection.json
 ```
+
+### Alternative Import Methods
+
+#### Method 1: Direct GitHub Import
+1. Open Postman
+2. Click **Import** → **Link**
+3. Paste: `https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewardsAPI.postman_collection.json`
+4. Click **Continue** → **Import**
+
+#### Method 2: Download and Import
+1. [Download Collection File](https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewardsAPI.postman_collection.json)
+2. Open Postman → **Import** → **Upload Files**
+3. Select the downloaded JSON file
 
 ### Quick Test Flow
 1. **Register Member** → Auto-saves Member ID
@@ -54,8 +67,8 @@ https://raw.githubusercontent.com/YOUR_USERNAME/member-rewards-api/main/MemberRe
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/member-rewards-api.git
-   cd member-rewards-api
+   git clone https://github.com/Ayush-yadav11/MemberRewardsApi.git
+   cd MemberRewardsApi
    ```
 
 2. **Run the application**
