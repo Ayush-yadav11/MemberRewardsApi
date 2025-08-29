@@ -2,7 +2,7 @@
 
 A comprehensive RESTful API built with .NET 8 for managing customer memberships, reward points, and coupon redemptions.
 
-## 🚀 Features
+## Features
 
 - **Member Registration & OTP Verification**
 - **JWT Token-based Authentication**
@@ -11,7 +11,7 @@ A comprehensive RESTful API built with .NET 8 for managing customer memberships,
 - **Responsive Frontend Interface**
 - **Complete API Documentation**
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **.NET 8** - Web API Framework
 - **Entity Framework Core** - ORM
@@ -19,7 +19,7 @@ A comprehensive RESTful API built with .NET 8 for managing customer memberships,
 - **JWT Authentication** - Security
 - **HTML/CSS/JavaScript** - Frontend
 
-## 📚 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -31,7 +31,7 @@ A comprehensive RESTful API built with .NET 8 for managing customer memberships,
 | GET | `/api/coupons/my-coupons` | Get available coupons |
 | POST | `/api/coupons/redeem` | Redeem coupon |
 
-## 🧪 Testing with Postman
+## Testing with Postman
 
 ### Import Collection
 Click the button below to import the complete Postman collection:
@@ -63,7 +63,7 @@ https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewa
 4. **View Points** → Check accumulated points
 5. **Redeem Coupons** → Test coupon system
 
-## 🏃‍♂️ Running the Application
+## Running the Application
 
 1. **Clone the repository**
    ```bash
@@ -80,24 +80,24 @@ https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewa
    - Frontend: http://localhost:5113
    - API Documentation: http://localhost:5113/swagger
 
-## 🔑 Demo Credentials
+## Demo Credentials
 
 - **OTP**: Always use `123456` for verification
 - **Test Mobile**: Any 10-15 digit number (e.g., `9876543210`)
 
-## 📋 Pre-configured Coupons
+## Pre-configured Coupons
 
 - **₹50 Off Coupon** - Requires 500 points
 - **₹100 Off Coupon** - Requires 1000 points
 
-## 🎯 Testing Workflow
+## Testing Workflow
 
 1. Register with mobile number
 2. Verify with OTP `123456`
 3. Add points by entering purchase amounts
 4. Redeem coupons when you have enough points
 
-## 📱 Frontend Features
+## Frontend Features
 
 - Responsive design
 - Real-time points calculation
@@ -105,7 +105,7 @@ https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewa
 - JWT token management
 - Error handling and validation
 
-## 🛡️ Security Features
+## Security Features
 
 - JWT token-based authentication
 - Input validation and sanitization
@@ -114,4 +114,4 @@ https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewa
 
 ---
 
-**Built with ❤️ using .NET 8 and Entity Framework Core**
+**Built using .NET 8 and Entity Framework Core**
