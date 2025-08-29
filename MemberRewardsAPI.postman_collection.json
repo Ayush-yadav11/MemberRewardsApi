@@ -1,9 +1,10 @@
 {
 	"info": {
 		"_postman_id": "member-rewards-api-collection",
-		"name": "Member Rewards API",
-		"description": "Complete API collection for Member Rewards System with JWT authentication",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"name": "Member Rewards API - Complete Collection",
+		"description": "🚀 Complete API collection for Member Rewards System\n\n## Quick Test Flow:\n1. **Register Member** → Auto-saves Member ID\n2. **Verify OTP** (use `123456`) → Auto-saves JWT Token\n3. **Add Points** → Test points calculation (₹100 = 10 points)\n4. **View Points** → Check accumulated points\n5. **Redeem Coupons** → Test coupon system\n\n## Demo Credentials:\n- **OTP**: Always use `123456`\n- **Mobile**: Any 10-15 digit number (e.g., `9876543210`)\n\n## Pre-configured Coupons:\n- **₹50 Off** - Requires 500 points\n- **₹100 Off** - Requires 1000 points\n\n**Built with .NET 8 & Entity Framework Core**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "member-rewards-api"
 	},
 	"auth": {
 		"type": "bearer",
@@ -19,17 +20,32 @@
 		{
 			"key": "base_url",
 			"value": "http://localhost:5113/api",
-			"type": "string"
+			"type": "string",
+			"description": "Base API URL for the Member Rewards API"
 		},
 		{
 			"key": "jwt_token",
 			"value": "",
-			"type": "string"
+			"type": "string",
+			"description": "JWT authentication token (auto-populated after OTP verification)"
 		},
 		{
 			"key": "member_id",
 			"value": "",
-			"type": "string"
+			"type": "string",
+			"description": "Member ID (auto-populated after registration)"
+		},
+		{
+			"key": "demo_mobile",
+			"value": "9876543210",
+			"type": "string",
+			"description": "Demo mobile number for testing"
+		},
+		{
+			"key": "demo_otp",
+			"value": "123456",
+			"type": "string",
+			"description": "Demo OTP (always works for testing)"
 		}
 	],
 	"item": [
@@ -43,11 +59,21 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"// Test for successful registration",
+									"pm.test('Registration successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.success).to.be.true;",
+									"    pm.expect(response.memberId).to.exist;",
+									"});",
+									"",
+									"// Auto-save member ID for next requests",
 									"if (pm.response.code === 200) {",
 									"    const response = pm.response.json();",
 									"    if (response.success && response.memberId) {",
 									"        pm.collectionVariables.set('member_id', response.memberId);",
-									"        console.log('Member ID set to:', response.memberId);",
+									"        console.log('✅ Member ID saved:', response.memberId);",
+									"        console.log('📱 Next step: Verify OTP with code 123456');",
 									"    }",
 									"}"
 								],
@@ -65,7 +91,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"mobileNumber\": \"9876543210\",\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
+							"raw": "{\n  \"mobileNumber\": \"{{demo_mobile}}\",\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/member/register",
@@ -88,12 +114,24 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"// Test for successful OTP verification",
+									"pm.test('OTP verification successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.success).to.be.true;",
+									"    pm.expect(response.token).to.exist;",
+									"    pm.expect(response.memberId).to.exist;",
+									"});",
+									"",
+									"// Auto-save JWT token and member ID",
 									"if (pm.response.code === 200) {",
 									"    const response = pm.response.json();",
 									"    if (response.success && response.token) {",
 									"        pm.collectionVariables.set('jwt_token', response.token);",
 									"        pm.collectionVariables.set('member_id', response.memberId);",
-									"        console.log('JWT Token set successfully');",
+									"        console.log('🔑 JWT Token saved successfully');",
+									"        console.log('👤 Member authenticated with ID:', response.memberId);",
+									"        console.log('💰 Next step: Add points or view available coupons');",
 									"    }",
 									"}"
 								],
@@ -111,7 +149,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"mobileNumber\": \"9876543210\",\n  \"otp\": \"123456\"\n}"
+							"raw": "{\n  \"mobileNumber\": \"{{demo_mobile}}\",\n  \"otp\": \"{{demo_otp}}\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/member/verify",
@@ -135,6 +173,34 @@
 			"item": [
 				{
 					"name": "Add Points",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for successful points addition",
+									"pm.test('Points added successfully', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.success).to.be.true;",
+									"    pm.expect(response.pointsAdded).to.exist;",
+									"    pm.expect(response.totalPoints).to.exist;",
+									"});",
+									"",
+									"// Log points calculation",
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success) {",
+									"        console.log('💰 Points added:', response.pointsAdded);",
+									"        console.log('🏆 Total points:', response.totalPoints);",
+									"        console.log('💵 Purchase amount: ₹' + JSON.parse(pm.request.body.raw).purchaseAmount);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -155,7 +221,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"memberId\": {{member_id}},\n  \"purchaseAmount\": 250.00,\n  \"description\": \"Purchase at Store XYZ\"\n}"
+							"raw": "{\n  \"memberId\": {{member_id}},\n  \"purchaseAmount\": 500.00,\n  \"description\": \"Purchase at Demo Store - Testing Points System\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/points/add",
@@ -167,12 +233,46 @@
 								"add"
 							]
 						},
-						"description": "Add points to a member's account. ₹100 = 10 points"
+						"description": "Add points to a member's account. \n\n**Points Calculation:** ₹100 = 10 points\n\n**Example:** ₹500 purchase = 50 points\n\n**Authentication:** Requires JWT token"
 					},
 					"response": []
 				},
 				{
 					"name": "Get Member Points",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for successful points retrieval",
+									"pm.test('Member points retrieved successfully', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.success).to.be.true;",
+									"    pm.expect(response.totalPoints).to.exist;",
+									"    pm.expect(response.transactions).to.exist;",
+									"});",
+									"",
+									"// Log points summary",
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success) {",
+									"        console.log('📊 Member Points Summary:');",
+									"        console.log('  Total Points:', response.totalPoints);",
+									"        console.log('  Total Transactions:', response.transactions.length);",
+									"        if (response.totalPoints >= 500) {",
+									"            console.log('  🎉 Eligible for ₹50 coupon!');",
+									"        }",
+									"        if (response.totalPoints >= 1000) {",
+									"            console.log('  🎉 Eligible for ₹100 coupon!');",
+									"        }",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -196,12 +296,49 @@
 								"{{member_id}}"
 							]
 						},
-						"description": "Get total points and transaction history for a specific member"
+						"description": "Get total points and transaction history for a specific member.\n\n**Returns:**\n- Total accumulated points\n- Transaction history\n- Points eligibility for coupons\n\n**Authentication:** Requires JWT token"
 					},
 					"response": []
 				},
 				{
 					"name": "Get My Points",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for successful personal points retrieval",
+									"pm.test('Personal points retrieved successfully', function () {",
+									"    pm.response.to.have.status(200);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.success).to.be.true;",
+									"    pm.expect(response.totalPoints).to.exist;",
+									"});",
+									"",
+									"// Log personal points with coupon eligibility",
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success) {",
+									"        console.log('👤 My Points Dashboard:');",
+									"        console.log('  My Total Points:', response.totalPoints);",
+									"        console.log('  Available Rewards:');",
+									"        if (response.totalPoints >= 1000) {",
+									"            console.log('    ✅ ₹100 Off Coupon (1000 points)');",
+									"            console.log('    ✅ ₹50 Off Coupon (500 points)');",
+									"        } else if (response.totalPoints >= 500) {",
+									"            console.log('    ✅ ₹50 Off Coupon (500 points)');",
+									"            console.log('    ❌ ₹100 Off Coupon (need ' + (1000 - response.totalPoints) + ' more points)');",
+									"        } else {",
+									"            console.log('    ❌ ₹50 Off Coupon (need ' + (500 - response.totalPoints) + ' more points)');",
+									"            console.log('    ❌ ₹100 Off Coupon (need ' + (1000 - response.totalPoints) + ' more points)');",
+									"        }",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
