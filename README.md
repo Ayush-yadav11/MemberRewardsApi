@@ -36,7 +36,7 @@ A comprehensive RESTful API built with .NET 8 for managing customer memberships,
 ### Import Collection
 Click the button below to import the complete Postman collection:
 
-[![Run in Postman]([https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/33737486-member-rewards-api-collection?action=collection%2Fimport](https://www.postman.com/aayush122yadav-3161403/member-rewards-api/documentation/zhsk92u/member-rewards-api-complete-collection))
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/aayush122yadav-3161403/member-rewards-api/documentation/zhsk92u/member-rewards-api-complete-collection)
 
 Or manually import from URL:
 ```
