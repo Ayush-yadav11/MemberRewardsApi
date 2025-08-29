@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Rewards System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎁 Member Rewards System</h1>
+            <p>Manage your membership and earn reward points!</p>
+        </header>
+
+        <div class="auth-section" id="authSection">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('register', event)">Register</button>
+                <button class="tab-btn" onclick="showTab('verify', event)">Verify OTP</button>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="tab-content active" id="register">
+                <h2>Register New Member</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="mobileNumber">Mobile Number *</label>
+                        <input type="tel" id="mobileNumber" name="mobileNumber" required 
+                               placeholder="Enter 10-digit mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+            </div>
+
+            <!-- OTP Verification Form -->
+            <div class="tab-content" id="verify">
+                <h2>Verify OTP</h2>
+                <form id="verifyForm">
+                    <div class="form-group">
+                        <label for="verifyMobile">Mobile Number *</label>
+                        <input type="tel" id="verifyMobile" name="verifyMobile" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="otp">OTP *</label>
+                        <input type="text" id="otp" name="otp" required maxlength="6" 
+                               placeholder="Enter OTP (Demo: 123456)">
+                    </div>
+                    <button type="submit" class="btn-primary">Verify OTP</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard Section (Hidden initially) -->
+        <div class="dashboard-section" id="dashboardSection" style="display: none;">
+            <div class="dashboard-header">
+                <h2>Welcome to Your Dashboard!</h2>
+                <div class="user-info" id="userInfo"></div>
+                <button class="btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="showDashboardTab('points', event)">My Points</button>
+                <button class="tab-btn" onclick="showDashboardTab('addPoints', event)">Add Points</button>
+                <button class="tab-btn" onclick="showDashboardTab('coupons', event)">Coupons</button>
+            </div>
+
+            <!-- Points Tab -->
+            <div class="tab-content active" id="points">
+                <div class="points-summary">
+                    <h3>Points Summary</h3>
+                    <div class="points-card">
+                        <div class="points-value" id="totalPoints">0</div>
+                        <div class="points-label">Total Points</div>
+                    </div>
+                </div>
+                <div class="transaction-history">
+                    <h3>Transaction History</h3>
+                    <div id="transactionList"></div>
+                </div>
+                <button class="btn-primary" onclick="refreshPoints()">Refresh Points</button>
+            </div>
+
+            <!-- Add Points Tab -->
+            <div class="tab-content" id="addPoints">
+                <h3>Add Points</h3>
+                <form id="addPointsForm">
+                    <div class="form-group">
+                        <label for="memberId">Member ID *</label>
+                        <input type="number" id="memberId" name="memberId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="purchaseAmount">Purchase Amount (₹) *</label>
+                        <input type="number" id="purchaseAmount" name="purchaseAmount" 
+                               step="0.01" min="0.01" required placeholder="Enter purchase amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" 
+                               placeholder="Optional description">
+                    </div>
+                    <div class="points-calculation">
+                        <small>Points earned: ₹100 = 10 points</small>
+                    </div>
+                    <button type="submit" class="btn-primary">Add Points</button>
+                </form>
+            </div>
+
+            <!-- Coupons Tab -->
+            <div class="tab-content" id="coupons">
+                <h3>Available Coupons</h3>
+                <div id="couponsList"></div>
+                <button class="btn-primary" onclick="refreshCoupons()">Refresh Coupons</button>
+            </div>
+        </div>
+
+        <!-- Message Display -->
+        <div class="message" id="message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

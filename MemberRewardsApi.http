@@ -1,0 +1,6 @@
+@MemberRewardsApi_HostAddress = http://localhost:5113
+
+GET {{MemberRewardsApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

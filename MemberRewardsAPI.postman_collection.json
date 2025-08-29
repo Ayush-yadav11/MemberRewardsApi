@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "member-rewards-api-collection",
+		"name": "Member Rewards API",
+		"description": "Complete API collection for Member Rewards System with JWT authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5113/api",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "member_id",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Member Management",
+			"item": [
+				{
+					"name": "Register Member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.memberId) {",
+									"        pm.collectionVariables.set('member_id', response.memberId);",
+									"        console.log('Member ID set to:', response.memberId);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"mobileNumber\": \"9876543210\",\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/member/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"member",
+								"register"
+							]
+						},
+						"description": "Register a new member with mobile number. Returns OTP for verification."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.token) {",
+									"        pm.collectionVariables.set('jwt_token', response.token);",
+									"        pm.collectionVariables.set('member_id', response.memberId);",
+									"        console.log('JWT Token set successfully');",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"mobileNumber\": \"9876543210\",\n  \"otp\": \"123456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/member/verify",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"member",
+								"verify"
+							]
+						},
+						"description": "Verify OTP to complete member registration. Returns JWT token for authentication."
+					},
+					"response": []
+				}
+			],
+			"description": "Member registration and OTP verification endpoints"
+		},
+		{
+			"name": "Points Management",
+			"item": [
+				{
+					"name": "Add Points",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"memberId\": {{member_id}},\n  \"purchaseAmount\": 250.00,\n  \"description\": \"Purchase at Store XYZ\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/points/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"points",
+								"add"
+							]
+						},
+						"description": "Add points to a member's account. ₹100 = 10 points"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Member Points",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/points/{{member_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"points",
+								"{{member_id}}"
+							]
+						},
+						"description": "Get total points and transaction history for a specific member"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Points",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/points/my-points",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"points",
+								"my-points"
+							]
+						},
+						"description": "Get points for the currently authenticated member"
+					},
+					"response": []
+				}
+			],
+			"description": "Points management endpoints for earning and viewing points"
+		},
+		{
+			"name": "Coupon Management",
+			"item": [
+				{
+					"name": "Get Available Coupons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/coupons/available/{{member_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"coupons",
+								"available",
+								"{{member_id}}"
+							]
+						},
+						"description": "Get list of available coupons for a specific member with redemption eligibility"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Coupons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/coupons/my-coupons",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"coupons",
+								"my-coupons"
+							]
+						},
+						"description": "Get available coupons for the currently authenticated member"
+					},
+					"response": []
+				},
+				{
+					"name": "Redeem Coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"memberId\": {{member_id}},\n  \"couponId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/coupons/redeem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"coupons",
+								"redeem"
+							]
+						},
+						"description": "Redeem a coupon using points. Returns coupon code."
+					},
+					"response": []
+				},
+				{
+					"name": "Redeem My Coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/coupons/redeem/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"coupons",
+								"redeem",
+								"1"
+							]
+						},
+						"description": "Redeem a coupon for the currently authenticated member"
+					},
+					"response": []
+				}
+			],
+			"description": "Coupon redemption endpoints for managing reward coupons"
+		}
+	]
+}
