@@ -36,7 +36,7 @@ A comprehensive RESTful API built with .NET 8 for managing customer memberships,
 ### Import Collection
 Click the button below to open the  Postman:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)]((https://www.postman.com/aayush122yadav-3161403/workspace/member-rewards-api/collection/48024707-eff68b74-65cf-4a47-829b-91cc4e4076a0?action=share&creator=48024707))
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/aayush122yadav-3161403/workspace/member-rewards-api/collection/48024707-eff68b74-65cf-4a47-829b-91cc4e4076a0?action=share&creator=48024707)
 
 ### Quick Test Flow
 1. **Register Member** → Auto-saves Member ID
