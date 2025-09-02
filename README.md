@@ -38,24 +38,6 @@ Click the button below to import the complete Postman collection:
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/aayush122yadav-3161403/member-rewards-api/documentation/zhsk92u/member-rewards-api-complete-collection)
 
-Or manually import from URL:
-```
-https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewardsAPI.postman_collection.json
-```
-
-### Alternative Import Methods
-
-#### Method 1: Direct GitHub Import
-1. Open Postman
-2. Click **Import** → **Link**
-3. Paste: `https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewardsAPI.postman_collection.json`
-4. Click **Continue** → **Import**
-
-#### Method 2: Download and Import
-1. [Download Collection File](https://raw.githubusercontent.com/Ayush-yadav11/MemberRewardsApi/main/MemberRewardsAPI.postman_collection.json)
-2. Open Postman → **Import** → **Upload Files**
-3. Select the downloaded JSON file
-
 ### Quick Test Flow
 1. **Register Member** → Auto-saves Member ID
 2. **Verify OTP** (use `123456`) → Auto-saves JWT Token
